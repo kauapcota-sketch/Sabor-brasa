@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Sabor & Brasa</title>
+
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+    <!-- CABEÇALHO -->
+    <header class="cabecalho">
+        <div>
+            <h1>Sabor & Brasa</h1>
+            <p>Comprometido a fazer do melhor para você!</p>
+        </div>
+        <button class="menu-btn" onclick="abrirMenu()">☰</button>
+    </header>
+    <!-- MENU HAMBURGER -->
+    <nav class="menu" id="menu">
+        <a href="#">Início</a>
+        <a href="#">Cardápio</a>
+        <a href="/html/sobre.html">Sobre nós</a>
+        <a href="#">Contato</a>
+        <a href="#">Fazer pedido</a>
+    </nav>
+
+    <main class="layout">
+        <section class="conteudo">    
+         <section class="banner">
+                <img src="/img/39a37fac-d969-418a-83bb-f7c334c10a9b.png" alt="Sabor & Brasa">
+                <div class="banner-texto">
+                    <h2>Sabor & Brasa</h2>
+                    <p>
+                        Mais que um hambúrguer, é puro sabor!
+                    </p>
+                    <button>
+                        Ver cardápio
+                    </button>
+                </div>
+            </section>
+            <!-- CARDS -->
+            <div class="cards">
+                <article class="card">
+                    <img src="/img/792cf5dc0120821dbac92de5b5cb2afb.jpg" alt="Hambúrguer mata-fome">
+
+                    <div>
+                        <h3>
+                            X-Básico
+                        </h3>
+                        <p>
+                            É o equilíbrio entre pagar barato e ficar satisfeito.
+                        </p>
+                    </div>
+                </article>
+                <article class="card">
+
+                    <img src="/img/b50d22aed638664f17fe53e43680d7c8.jpg" alt="Big-X Salada">
+                    <div>
+                        <h3>
+                           X-Amazonia
+                        </h3>
+                        <p>
+                            Se tem salada é saudável, muito saboroso!
+                        </p>
+                    </div>
+                </article>
+                <article class="card">
+
+                    <img src="/img/aab97026788432316d3a26d6057de02e.jpg" alt="Big-X Salada">
+                    <div>
+                        <h3>
+                            X-Frango do sabor
+                        </h3>
+                        <p>
+                            Ingredientes da mais alta qualidade para seu proveito, recomendamos muito!
+                        </p>
+                    </div>
+                </article>
+                <article class="card">
+
+                    <img src="/img/e263e50bc39528becbd777a271e297af.jpg" alt="Big-X Salada">
+                    <div>
+                        <h3>
+                            X-EGG-MAX-PRO-ULTIMATE-COMPLIT DO SABOR
+                        </h3>
+                        <p>
+                           Ingredientes comprados diretamente das terras mais abençoadas do mundo, muito saboroso!
+                        </p>
+                    </div>
+                </article>
+            </div>
+        </section>
+        <!-- CLIENTE À DIREITA -->
+        <aside class="cliente">
+            <img src="/img/06e9ea95-3ad5-4202-8883-2a009ee3116d.png" alt="Cliente provando o Sabor & Brasa">
+
+            <h2>Experimente o Sabor & Brasa!</h2>
+            <p>
+                O sabor que conquista desde a primeira mordida.
+            </p>
+            <button>
+                Fazer pedido
+            </button>
+        </aside>
+    </main>
+    <footer>
+        <h3>
+            <a href="#">Siga o programador @Pirez_7</a>
+        </h3>
+        <p>Deus abençoe todos!</p>
+    </footer>
+    <script>
+        function abrirMenu() {
+            const menu = document.getElementById("menu");
+            menu.classList.toggle("ativo");
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sobre nós - Sabor & Brasa</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+    <!-- CABEÇALHO -->
+    <header class="cabecalho">
+        <div>
+            <h1>Sabor & Brasa</h1>
+            <p>Comprometido a fazer do melhor para você!</p>
+        </div>
+        <button class="menu-btn" onclick="abrirMenu()">☰</button>
+    </header>
+
+    <!-- MENU -->
+    <nav class="menu" id="menu">
+        <a href="index.html">Início</a>
+        <a href="#">Cardápio</a>
+        <a href="sobre.html">Sobre nós</a>
+        <a href="#">Contato</a>
+        <a href="#">Fazer pedido</a>
+    </nav>
+
+    <!-- SOBRE -->
+    <main class="sobre">
+        <section class="titulo-sobre">
+            <span>SOBRE NÓS</span>
+            <h2>
+                Mais que um hambúrguer,<br>
+                <strong>é puro sabor!</strong>
+            </h2>
+            <p>
+                O Sabor & Brasa nasceu para transformar um simples
+                hambúrguer em uma experiência inesquecível.
+            </p>
+        </section>
+
+        <!-- HISTÓRIA -->
+        <section class="historia">
+            <div class="texto">
+                <h2>
+                    Nossa <span>história</span>
+                </h2>
+                <p>
+                    A Brasa e Sabor é uma empresa de alimentação fundada em 2023, criada com o objetivo de levar sabor, qualidade e satisfação aos nossos clientes.
+                     Desde o início, buscamos oferecer comidas deliciosas, preparadas com dedicação e ingredientes selecionados, proporcionando uma experiência especial em cada refeição.
+                      Nossa paixão pela gastronomia é o que nos motiva a melhorar continuamente e conquistar a confiança de quem escolhe a nossa marca.
+                </p>
+                <p>
+                    Acreditamos que uma boa comida vai além do sabor: ela reúne momentos, aproxima pessoas e cria memórias.
+                    Por isso, a Brasa e Sabor trabalha para oferecer um atendimento acolhedor,
+                    produtos de qualidade e uma experiência que faça nossos clientes quererem voltar.
+                    Nossa missão é transformar cada pedido em um momento de prazer, levando o verdadeiro sabor da brasa até você.
+                </p>
+            </div>
+
+            <div class="imagem">
+                <img src="/img/eu de terno.png" height=800 alt="Hambúrguer Sabor & Brasa">
+            </div>
+        </section>
+    </main>
+    <footer>
+        © Siga o programador @Pirez_7.
+    </footer>
+    <script>
+        function abrirMenu() {
+            const menu = document.getElementById("menu");
+            menu.classList.toggle("ativo");
+        }
+    </script>
+</body>
+
+</html>

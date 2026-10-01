@@ -1,0 +1,140 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #111;
+    color: white;
+
+    min-height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login {
+    width: 380px;
+    padding: 40px;
+    text-align: center;
+}
+
+
+/* MARCA */
+
+.marca {
+    margin-bottom: 40px;
+}
+
+.marca h1 {
+    font-size: 38px;
+    font-weight: 900;
+    font-style: italic;
+}
+
+.marca h1 span {
+    color: #ff8500;
+}
+
+.marca h2 {
+    font-size: 52px;
+    color: #ff8500;
+    font-style: italic;
+    font-weight: 900;
+    line-height: 40px;
+}
+
+.marca p {
+    font-size: 12px;
+    letter-spacing: 5px;
+    color: #ccc;
+    margin-top: 10px;
+}
+
+
+/* LOGIN */
+
+.login h3 {
+    font-size: 28px;
+    margin-bottom: 25px;
+}
+
+form input {
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 15px;
+
+    background: #222;
+    border: 1px solid #444;
+    border-radius: 6px;
+
+    color: white;
+    font-size: 15px;
+}
+
+form input:focus {
+    outline: none;
+    border-color: #ff8500;
+}
+
+button {
+    width: 100%;
+    padding: 15px;
+
+    border: none;
+    border-radius: 6px;
+
+    background: #ff8500;
+    color: white;
+
+    font-weight: bold;
+    font-size: 15px;
+
+    cursor: pointer;
+}
+
+button:hover {
+    background: #e67300;
+}
+
+
+/* LINKS */
+
+.esqueci {
+    display: block;
+    margin-top: 18px;
+
+    color: #ff8500;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.cadastro {
+    margin-top: 25px;
+    color: #888;
+    font-size: 14px;
+}
+
+.cadastro a {
+    color: #ff8500;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.voltar {
+    display: block;
+    margin-top: 25px;
+
+    color: #aaa;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.voltar:hover,
+.esqueci:hover,
+.cadastro a:hover {
+    text-decoration: underline;
+}

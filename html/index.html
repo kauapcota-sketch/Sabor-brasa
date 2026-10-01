@@ -9,6 +9,7 @@
 
     <link rel="stylesheet" href="/css/style.css">
 </head>
+
 <body>
 
     <!-- CABEÇALHO -->
@@ -17,107 +18,249 @@
             <h1>Sabor & Brasa</h1>
             <p>Comprometido a fazer do melhor para você!</p>
         </div>
+
+        <!-- UM ÚNICO BOTÃO HAMBURGER -->
         <button class="menu-btn" onclick="abrirMenu()">☰</button>
     </header>
-    <!-- MENU HAMBURGER -->
+
+    <!-- MENU -->
     <nav class="menu" id="menu">
-        <a href="#">Início</a>
-        <a href="#">Cardápio</a>
-        <a href="/html/sobre.html">Sobre nós</a>
-        <a href="#">Contato</a>
-        <a href="#">Fazer pedido</a>
+        <a href="index.html">
+            Início
+        </a>
+        <!-- ABRE O CARDÁPIO -->
+        <a href="#" onclick="abrirCardapio(); return false;">
+            Cardápio
+        </a>
+        <a href="sobre.html">
+            Sobre nós
+            <!-- ABRE O CARDÁPIO -->
+            <a href="login.html">
+                Login
+            </a>
+
     </nav>
 
+
+    <!-- CONTEÚDO -->
     <main class="layout">
-        <section class="conteudo">    
-         <section class="banner">
+        <section class="conteudo">
+            <!-- BANNER -->
+            <section class="banner">
                 <img src="/img/39a37fac-d969-418a-83bb-f7c334c10a9b.png" alt="Sabor & Brasa">
                 <div class="banner-texto">
                     <h2>Sabor & Brasa</h2>
                     <p>
                         Mais que um hambúrguer, é puro sabor!
                     </p>
-                    <button>
+                    <!-- ABRE O CARDÁPIO -->
+                    <button onclick="abrirCardapio()">
                         Ver cardápio
                     </button>
                 </div>
             </section>
+
             <!-- CARDS -->
             <div class="cards">
-                <article class="card">
-                    <img src="/img/792cf5dc0120821dbac92de5b5cb2afb.jpg" alt="Hambúrguer mata-fome">
 
-                    <div>
-                        <h3>
-                            X-Básico
-                        </h3>
-                        <p>
-                            É o equilíbrio entre pagar barato e ficar satisfeito.
-                        </p>
-                    </div>
-                </article>
-                <article class="card">
+                <div class="cards">
 
-                    <img src="/img/b50d22aed638664f17fe53e43680d7c8.jpg" alt="Big-X Salada">
-                    <div>
-                        <h3>
-                           X-Amazonia
-                        </h3>
-                        <p>
-                            Se tem salada é saudável, muito saboroso!
-                        </p>
-                    </div>
-                </article>
-                <article class="card">
+                    <article class="card" onclick="abrirProduto('basico')">
+                        <img src="/img/792cf5dc0120821dbac92de5b5cb2afb.jpg" alt="Hambúrguer X-Básico">
+                        <div>
+                            <h3>X-Básico</h3>
+                            <p>É o equilíbrio entre pagar barato e ficar satisfeito.</p>
+                        </div>
+                    </article>
 
-                    <img src="/img/aab97026788432316d3a26d6057de02e.jpg" alt="Big-X Salada">
-                    <div>
-                        <h3>
-                            X-Frango do sabor
-                        </h3>
-                        <p>
-                            Ingredientes da mais alta qualidade para seu proveito, recomendamos muito!
-                        </p>
-                    </div>
-                </article>
-                <article class="card">
+                    <article class="card" onclick="abrirProduto('amazonia')">
+                        <img src="/img/b50d22aed638664f17fe53e43680d7c8.jpg" alt="X-Amazonia">
+                        <div>
+                            <h3>X-Amazonia</h3>
+                            <p>Se tem salada é saudável, muito saboroso!</p>
+                        </div>
+                    </article>
 
-                    <img src="/img/e263e50bc39528becbd777a271e297af.jpg" alt="Big-X Salada">
-                    <div>
-                        <h3>
-                            X-EGG-MAX-PRO-ULTIMATE-COMPLIT DO SABOR
-                        </h3>
-                        <p>
-                           Ingredientes comprados diretamente das terras mais abençoadas do mundo, muito saboroso!
-                        </p>
-                    </div>
-                </article>
+                    <article class="card" onclick="abrirProduto('frango')">
+                        <img src="/img/aab97026788432316d3a26d6057de02e.jpg" alt="X-Frango do Sabor">
+                        <div>
+                            <h3>X-Frango do Sabor</h3>
+                            <p>Ingredientes da mais alta qualidade para seu proveito!</p>
+                        </div>
+                    </article>
+
+                    <article class="card" onclick="abrirProduto('egg')">
+                        <img src="/img/e263e50bc39528becbd777a271e297af.jpg" alt="X-EGG-MAX-PRO-ULTIMATE">
+                        <div>
+                            <h3>X-EGG-MAX-PRO-ULTIMATE-COMPLIT DO SABOR</h3>
+                            <p>Ingredientes comprados diretamente das terras mais abençoadas do mundo!</p>
+                        </div>
+                    </article>
+
+                </div>
             </div>
         </section>
+
         <!-- CLIENTE À DIREITA -->
         <aside class="cliente">
-            <img src="/img/06e9ea95-3ad5-4202-8883-2a009ee3116d.png" alt="Cliente provando o Sabor & Brasa">
 
-            <h2>Experimente o Sabor & Brasa!</h2>
+            <img src="/img/06e9ea95-3ad5-4202-8883-2a009ee3116d.png" alt="Cliente provando o Sabor & Brasa">
+            <h2>
+                Experimente o Sabor & Brasa!
+            </h2>
             <p>
-                O sabor que conquista desde a primeira mordida.
+                Experimente em primeira mão o sabor que conquista desde a primeira mordida, Costela Supreme Single.
             </p>
-            <button>
+            <button onclick="abrirCardapio()">
                 Fazer pedido
             </button>
         </aside>
     </main>
-    <footer>
-        <h3>
-            <a href="#">Siga o programador @Pirez_7</a>
-        </h3>
-        <p>Deus abençoe todos!</p>
-    </footer>
-    <script>
-        function abrirMenu() {
-            const menu = document.getElementById("menu");
-            menu.classList.toggle("ativo");
-        }
-    </script>
+
+    <!-- MODAL DO CARDÁPIO -->
+    <div class="modal-produto" id="modalProduto">
+
+        <div class="produto">
+
+            <!-- FECHAR -->
+            <button class="fechar" onclick="fecharProduto()">
+                ×
+            </button>
+
+            <div class="produto-imagem">
+                <img id="imagem-produto" src="" alt="">
+            </div>
+
+            <div class="produto-info">
+                <h2 id="nome-produto"></h2>
+
+                <p class="descricao">
+                    Single (160g). Prepare-se para a elite!
+                    Hambúrguer de costela (160g) na brasa,
+                    coberto por muito cheddar americano
+                    derretido e bacon crocante.
+                    O sabor explode com o exclusivo Ketchup Heinz,
+                    Cebola Caramelizada e Bacon.
+                </p>
+
+                <p class="preco" id="preco-base"></p>
+
+                <!-- ACRÉSCIMOS -->
+                <div class="acrescimos">
+                    <h3>Acréscimos</h3>
+                    <p>Escolha os adicionais que quiser</p>
+                </div>
+
+                <!-- COSTELA -->
+                <div class="opcao">
+                    <div>
+                        <span>Coca-Cola 450ML</span>
+                        <small>+ R$ 9,50</small>
+                    </div>
+
+                    <div class="quantidade">
+                        <button onclick="alterarQuantidade('costela', -1)">−</button>
+
+                        <span id="qtd-costela">0</span>
+
+                        <button onclick="alterarQuantidade('costela', 1)">+</button>
+                    </div>
+                </div>
+
+
+                <!-- BOVINO -->
+                <div class="opcao">
+                    <div>
+                        <span>Coca-Cola 2L</span>
+                        <small>+ R$ 15,50</small>
+                    </div>
+
+                    <div class="quantidade">
+                        <button onclick="alterarQuantidade('bovino', -1)">−</button>
+
+                        <span id="qtd-bovino">0</span>
+
+                        <button onclick="alterarQuantidade('bovino', 1)">+</button>
+                    </div>
+                </div>
+
+
+                <!-- BACON -->
+                <div class="opcao">
+                    <div>
+                        <span>Bacon Extra</span>
+                        <small>+ R$ 5,00</small>
+                    </div>
+
+                    <div class="quantidade">
+                        <button onclick="alterarQuantidade('bacon', -1)">−</button>
+
+                        <span id="qtd-bacon">0</span>
+
+                        <button onclick="alterarQuantidade('bacon', 1)">+</button>
+                    </div>
+                </div>
+
+
+                <!-- QUEIJO -->
+                <div class="opcao">
+                    <div>
+                        <span>Queijo Extra</span>
+                        <small>+ R$ 4,00</small>
+                    </div>
+
+                    <div class="quantidade">
+                        <button onclick="alterarQuantidade('queijo', -1)">−</button>
+
+                        <span id="qtd-queijo">0</span>
+
+                        <button onclick="alterarQuantidade('queijo', 1)">+</button>
+                    </div>
+                </div>
+                <div class="produto-footer">
+
+                    <div class="contador">
+
+                        <button onclick="alterarProduto(-1)">
+                            −
+                        </button>
+
+                        <span id="quantidade-produto">
+                            1
+                        </span>
+
+                        <button onclick="alterarProduto(1)">
+                            +
+                        </button>
+
+                    </div>
+
+                    <button class="adicionar" onclick="adicionarCarrinho()">
+
+                        <span>Adicionar</span>
+
+                        <strong id="preco-total">
+                            R$ 37,00
+                        </strong>
+
+                    </button>
+
+                </div>
+
+                <!-- RODAPÉ -->
+                <footer>
+                    <h3>
+                        <a href="#">
+                            Siga o programador @Pirez_7
+                        </a>
+                    </h3>
+                    <p>
+                        Deus abençoe todos!
+                    </p>
+                </footer>
+
+
 </body>
+<script src="/js/script.js"></script>
+
 </html>

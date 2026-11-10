@@ -1,0 +1,23 @@
+SABOR & BRASA - API PHP para consultar dados
+
+INSTALAÇÃO
+1. Inicie Apache e MySQL no XAMPP.
+2. Importe o arquivo sabor_brasa.sql no phpMyAdmin.
+3. Coloque esta pasta em C:\xampp\htdocs\sabor_brasa_api
+   ou copie as pastas config/ e api/ para a pasta do seu site.
+4. Confira config/conexao.php. No XAMPP padrão:
+   banco = sabor_brasa | usuário = root | senha = vazia.
+5. Teste no navegador:
+   http://localhost/sabor_brasa_api/api/produtos.php
+   http://localhost/sabor_brasa_api/api/adicionais.php
+   http://localhost/sabor_brasa_api/api/produto.php?id=1
+
+ROTAS GET
+api/produtos.php       Lista produtos ativos.
+api/adicionais.php     Lista adicionais ativos.
+api/produto.php?id=1   Busca um produto por ID.
+
+As respostas são JSON. Este pacote apenas consulta dados.
+Cadastro, login, gravação do carrinho e finalização de pedidos
+precisam de rotas POST, validação e autenticação próprias.
+Não confie em preços ou totais enviados pelo JavaScript do navegador.

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrinho - Sabor &amp; Brasa</title>
+    <link rel="stylesheet" href="../css/carrinho.css">
+</head>
+<body class="pagina-carrinho">
+    <header class="topo-carrinho">
+        <a class="marca-carrinho" href="index.html" aria-label="Sabor e Brasa - início">
+            <span>SABOR <b>&amp;</b></span>
+            <strong>BRASA</strong>
+        </a>
+        <a class="voltar-cardapio" href="index.html">← Continuar comprando</a>
+    </header>
+
+    <main class="container-carrinho">
+        <section class="titulo-carrinho">
+            <span class="etiqueta">SEU PEDIDO</span>
+            <h1>Meu carrinho</h1>
+            <p>Confira seus itens e finalize seu pedido.</p>
+        </section>
+
+        <div class="grade-carrinho">
+            <section class="painel-itens">
+                <div class="cabecalho-painel">
+                    <h2>Seus produtos</h2>
+                    <a href="index.html">Adicionar mais itens</a>
+                </div>
+                <div id="itens-carrinho">
+                    <p class="estado-vazio">Carregando seu carrinho...</p>
+                </div>
+            </section>
+
+            <aside class="painel-finalizar">
+                <div class="resumo-topo">
+                    <span>RESUMO DO PEDIDO</span>
+                    <h2>Finalizar compra</h2>
+                </div>
+
+                <div class="linha-total">
+                    <span>Total do pedido</span>
+                    <strong id="total-carrinho">Total: R$ 0,00</strong>
+                </div>
+
+                <form id="form-finalizar">
+                    <p id="status-login" class="status-login" aria-live="polite"></p>
+
+                    <label for="endereco">Endereço de entrega</label>
+                    <textarea id="endereco" name="endereco" rows="3"
+                              placeholder="Rua, número, bairro e complemento" required></textarea>
+
+                    <label for="pagamento">Forma de pagamento</label>
+                    <select id="pagamento" name="pagamento" required>
+                        <option value="pix">PIX</option>
+                        <option value="cartao">Cartão</option>
+                        <option value="dinheiro">Dinheiro</option>
+                    </select>
+
+                    <button class="botao-finalizar" type="submit">
+                        ENVIAR PEDIDO <span>→</span>
+                    </button>
+                    <p class="mensagem-carrinho" id="mensagem" aria-live="polite"></p>
+                </form>
+
+                <p class="nota-carrinho">Seu pedido será enviado para a equipe do Sabor &amp; Brasa.</p>
+            </aside>
+        </div>
+    </main>
+
+    <footer class="rodape-carrinho">
+        <span>SABOR &amp; BRASA</span>
+        <p>Feito para matar sua fome.</p>
+    </footer>
+
+    <script src="../js/cart.js"></script>
+</body>
+</html>

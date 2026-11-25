@@ -1,140 +1,321 @@
+/* Sabor & Brasa — visual inspirado na referência enviada */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+:root {
+    --laranja: #ff6b16;
+    --laranja-claro: #ff9a38;
+    --fundo: #090403;
+    --texto: #f7f2ef;
+    --texto-suave: #a69b96;
+    --campo: #211715;
+}
+
 body {
-    font-family: Arial, sans-serif;
-    background: #111;
-    color: white;
-
     min-height: 100vh;
-
+    padding: 32px;
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
+    font-family: Arial, Helvetica, sans-serif;
+    color: var(--texto);
+    background: linear-gradient(135deg, #ffd943 0%, #ff8500 48%, #bd190b 100%);
 }
 
-.login {
-    width: 380px;
-    padding: 40px;
-    text-align: center;
+.pagina-form {
+    width: min(100%, 1180px);
+    min-height: 740px;
+    display: grid;
+    grid-template-columns: 40% 60%;
+    overflow: hidden;
+    background: var(--fundo);
+    border: 1px solid rgba(255, 255, 255, .12);
+    border-radius: 28px;
+    box-shadow: 0 24px 70px rgba(38, 9, 0, .42);
 }
 
-
-/* MARCA */
+.painel-form {
+    padding: 44px clamp(28px, 4vw, 58px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: linear-gradient(155deg, #100705 0%, #080403 100%);
+    position: relative;
+    z-index: 1;
+}
 
 .marca {
-    margin-bottom: 40px;
+    margin-bottom: 48px;
 }
 
 .marca h1 {
-    font-size: 38px;
+    color: var(--texto);
+    font-size: 27px;
+    line-height: 1;
     font-weight: 900;
     font-style: italic;
+    letter-spacing: -1px;
 }
 
 .marca h1 span {
-    color: #ff8500;
+    color: var(--laranja);
 }
 
 .marca h2 {
-    font-size: 52px;
-    color: #ff8500;
-    font-style: italic;
+    margin-top: 3px;
+    color: var(--laranja);
+    font-size: 38px;
+    line-height: 1;
     font-weight: 900;
-    line-height: 40px;
+    font-style: italic;
+    letter-spacing: 2px;
 }
 
-.marca p {
-    font-size: 12px;
-    letter-spacing: 5px;
-    color: #ccc;
-    margin-top: 10px;
+.chamada {
+    margin-bottom: 30px;
 }
 
-
-/* LOGIN */
-
-.login h3 {
-    font-size: 28px;
-    margin-bottom: 25px;
-}
-
-form input {
-    width: 100%;
-    padding: 15px;
+.chamada h3 {
+    max-width: 390px;
     margin-bottom: 15px;
-
-    background: #222;
-    border: 1px solid #444;
-    border-radius: 6px;
-
-    color: white;
-    font-size: 15px;
+    font-size: clamp(27px, 3vw, 37px);
+    line-height: 1.12;
+    font-weight: 600;
+    letter-spacing: -1px;
 }
 
-form input:focus {
-    outline: none;
-    border-color: #ff8500;
+.chamada h3 span {
+    color: var(--laranja-claro);
+    font-style: italic;
 }
 
-button {
+.chamada p {
+    max-width: 350px;
+    color: var(--texto-suave);
+    font-size: 13px;
+    line-height: 1.65;
+}
+
+.pagina-form form {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+}
+
+.pagina-form label {
+    margin-top: 5px;
+    color: #e8dfda;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.pagina-form input {
     width: 100%;
-    padding: 15px;
+    min-height: 45px;
+    padding: 12px 14px;
+    color: var(--texto);
+    background: var(--campo);
+    border: 1px solid #382824;
+    border-radius: 9px;
+    outline: none;
+    font-size: 13px;
+    transition: border-color .2s, box-shadow .2s, background .2s;
+}
 
-    border: none;
-    border-radius: 6px;
+.pagina-form input::placeholder {
+    color: #887c76;
+}
 
-    background: #ff8500;
-    color: white;
+.pagina-form input:focus {
+    background: #2a1b17;
+    border-color: var(--laranja);
+    box-shadow: 0 0 0 3px rgba(255, 107, 22, .14);
+}
 
-    font-weight: bold;
-    font-size: 15px;
-
+.pagina-form button {
+    width: fit-content;
+    min-width: 120px;
+    min-height: 43px;
+    margin-top: 22px;
+    padding: 12px 23px;
+    color: #fff;
+    background: linear-gradient(135deg, #ff8127, #f4510b);
+    border: 0;
+    border-radius: 9px;
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: .3px;
     cursor: pointer;
+    box-shadow: 0 7px 20px rgba(244, 81, 11, .18);
+    transition: transform .2s, filter .2s;
 }
 
-button:hover {
-    background: #e67300;
+.pagina-form button:hover {
+    filter: brightness(1.12);
+    transform: translateY(-2px);
 }
 
+.pagina-form p {
+    margin-top: 22px;
+    color: var(--texto-suave);
+    font-size: 12px;
+    line-height: 1.6;
+}
 
-/* LINKS */
-
-.esqueci {
-    display: block;
-    margin-top: 18px;
-
-    color: #ff8500;
+.pagina-form a {
+    color: var(--laranja-claro);
+    font-weight: 700;
     text-decoration: none;
-    font-size: 14px;
 }
 
-.cadastro {
-    margin-top: 25px;
-    color: #888;
-    font-size: 14px;
-}
-
-.cadastro a {
-    color: #ff8500;
-    text-decoration: none;
-    font-weight: bold;
-}
-
-.voltar {
-    display: block;
-    margin-top: 25px;
-
-    color: #aaa;
-    text-decoration: none;
-    font-size: 14px;
-}
-
-.voltar:hover,
-.esqueci:hover,
-.cadastro a:hover {
+.pagina-form a:hover {
+    color: #ffc078;
     text-decoration: underline;
+}
+
+.pagina-form .aviso {
+    margin-top: 12px;
+    color: #ffd0a6;
+    overflow-wrap: anywhere;
+}
+
+.rodape-form {
+    margin-top: auto;
+    padding-top: 34px;
+    color: #776c67;
+    font-size: 10px;
+    line-height: 1.5;
+}
+
+.visual-login {
+    min-height: 100%;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: flex-end;
+    padding: clamp(30px, 5vw, 65px);
+    isolation: isolate;
+    background:
+        radial-gradient(ellipse at 54% 42%, rgba(255, 91, 0, .28), transparent 35%),
+        radial-gradient(ellipse at 80% 85%, rgba(255, 72, 0, .38), transparent 32%),
+        linear-gradient(145deg, #080403 10%, #160600 55%, #050303 100%);
+}
+
+.visual-login::before,
+.visual-login::after {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    border: 54px solid rgba(255, 78, 0, .72);
+    border-radius: 48% 52% 42% 58%;
+    filter: drop-shadow(0 0 18px rgba(255, 68, 0, .55));
+    transform: rotate(-28deg);
+}
+
+.visual-login::before {
+    width: 520px;
+    height: 270px;
+    top: 12%;
+    left: 15%;
+    box-shadow:
+        0 0 0 18px rgba(0, 0, 0, .8),
+        0 0 0 27px rgba(255, 86, 0, .25),
+        inset 0 0 30px rgba(0, 0, 0, .8);
+}
+
+.visual-login::after {
+    width: 620px;
+    height: 210px;
+    right: -22%;
+    bottom: 5%;
+    border-color: rgba(255, 91, 0, .88);
+    transform: rotate(-17deg);
+    box-shadow:
+        0 0 0 17px rgba(0, 0, 0, .9),
+        0 0 0 26px rgba(255, 78, 0, .22),
+        inset 0 0 32px rgba(0, 0, 0, .85);
+}
+
+.visual-texto {
+    max-width: 390px;
+    color: #fff1e9;
+    text-shadow: 0 2px 18px rgba(0, 0, 0, .65);
+}
+
+.visual-texto strong {
+    display: block;
+    margin-bottom: 9px;
+    color: #ff9a4d;
+    font-size: 13px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+}
+
+.visual-texto h2 {
+    margin-bottom: 10px;
+    font-size: clamp(25px, 3vw, 39px);
+    line-height: 1.08;
+}
+
+.visual-texto p {
+    color: #d0bdb4;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+@media (max-width: 850px) {
+    body {
+        padding: 18px;
+    }
+
+    .pagina-form {
+        width: min(100%, 520px);
+        min-height: auto;
+        display: block;
+        border-radius: 20px;
+    }
+
+    .painel-form {
+        min-height: 680px;
+        padding: 36px clamp(24px, 7vw, 48px);
+    }
+
+    .visual-login {
+        display: none;
+    }
+
+    .rodape-form {
+        margin-top: 28px;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding: 10px;
+        align-items: flex-start;
+    }
+
+    .pagina-form {
+        border-radius: 16px;
+    }
+
+    .painel-form {
+        min-height: calc(100vh - 20px);
+        padding: 30px 23px;
+    }
+
+    .marca {
+        margin-bottom: 35px;
+    }
+
+    .chamada h3 {
+        font-size: 29px;
+    }
+
+    .pagina-form button {
+        width: 100%;
+    }
 }

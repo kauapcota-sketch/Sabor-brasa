@@ -1,266 +1,100 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Sabor & Brasa</title>
-
-    <link rel="stylesheet" href="/css/style.css">
+    <title>Sabor &amp; Brasa</title>
+    <link rel="stylesheet" href="../css/style.css">
 </head>
-
 <body>
-
-    <!-- CABEÇALHO -->
     <header class="cabecalho">
         <div>
-            <h1>Sabor & Brasa</h1>
+            <h1>Sabor &amp; Brasa</h1>
             <p>Comprometido a fazer do melhor para você!</p>
+            <p id="saudacao-usuario" class="saudacao-usuario" hidden></p>
         </div>
-
-        <!-- UM ÚNICO BOTÃO HAMBURGER -->
-        <button class="menu-btn" onclick="abrirMenu()">☰</button>
+        <button class="menu-btn" type="button" onclick="abrirMenu()" aria-label="Abrir menu">☰</button>
     </header>
 
-    <!-- MENU -->
     <nav class="menu" id="menu">
-        <a href="index.html">
-            Início
-        </a>
-        <!-- ABRE O CARDÁPIO -->
-        <a href="#" onclick="abrirCardapio(); return false;">
-            Cardápio
-        </a>
-        <a href="sobre.html">
-            Sobre nós
-            <!-- ABRE O CARDÁPIO -->
-            <a href="login.html">
-                Login
-            </a>
-
+        <a href="index.html">Início</a>
+        <a href="#cardapio" onclick="abrirCardapio(); return false;">Cardápio</a>
+        <a href="sobre.html">Sobre nós</a>
+        <a href="login.html">Login</a>
+        <a href="carrinho.html">Carrinho (<span id="contador-carrinho">0</span>)</a>
     </nav>
 
-
-    <!-- CONTEÚDO -->
     <main class="layout">
         <section class="conteudo">
-            <!-- BANNER -->
-            <section class="banner">
-                <img src="/img/eslogan.png" alt="Sabor & Brasa">
-                <div class="banner-texto">
-                    <h2>Sabor & Brasa</h2>
-                    <p>
-                        Mais que um hambúrguer, é puro sabor!
-                    </p>
-                    <!-- ABRE O CARDÁPIO -->
-                    <button onclick="abrirCardapio()">
-                        Ver cardápio
-                    </button>
+            <section class="carrossel" aria-label="Destaques do Sabor &amp; Brasa">
+                <div class="lista-imagens">
+                    <div class="slide-carrossel">
+                        <img src="../img/eslogan.png" alt="Banner Sabor &amp; Brasa">
+                    </div>
+                    <div class="slide-carrossel">
+                        <img src="../img/eu de terno.png" alt="Fachada do Sabor &amp; Brasa">
+                    </div>
+                    <div class="slide-carrossel">
+                        <img src="../img/costela.jpg" alt="Costela assada">
+                    </div>
                 </div>
+                <button class="botao-anterior" type="button" aria-label="Imagem anterior">&#10094;</button>
+                <button class="botao-proximo" type="button" aria-label="Próxima imagem">&#10095;</button>
+                <div class="indicadores"></div>
             </section>
 
-            <!-- CARDS -->
-            <div class="cards">
-
-                <div class="cards">
-
-                    <article class="card" onclick="abrirProduto('basico')">
-                        <img src="/img/792cf5dc0120821dbac92de5b5cb2afb.jpg" alt="Hambúrguer X-Básico">
-                        <div>
-                            <h3>X-Básico</h3>
-                            <p>É o equilíbrio entre pagar barato e ficar satisfeito.</p>
-                        </div>
-                    </article>
-
-                    <article class="card" onclick="abrirProduto('amazonia')">
-                        <img src="/img/b50d22aed638664f17fe53e43680d7c8.jpg" alt="X-Amazonia">
-                        <div>
-                            <h3>X-Amazonia</h3>
-                            <p>Se tem salada é saudável, muito saboroso!</p>
-                        </div>
-                    </article>
-
-                    <article class="card" onclick="abrirProduto('frango')">
-                        <img src="/img/aab97026788432316d3a26d6057de02e.jpg" alt="X-Frango do Sabor">
-                        <div>
-                            <h3>X-Frango do Sabor</h3>
-                            <p>Ingredientes da mais alta qualidade para seu proveito!</p>
-                        </div>
-                    </article>
-
-                    <article class="card" onclick="abrirProduto('egg')">
-                        <img src="/img/e263e50bc39528becbd777a271e297af.jpg" alt="X-EGG-MAX-PRO-ULTIMATE">
-                        <div>
-                            <h3>X-EGG-MAX-PRO-ULTIMATE-COMPLIT DO SABOR</h3>
-                            <p>Ingredientes comprados diretamente das terras mais abençoadas do mundo!</p>
-                        </div>
-                    </article>
-
+            <section class="secao-cardapio" id="cardapio">
+                <h2>Nosso cardápio</h2>
+                <p>Escolha seu hambúrguer, personalize com adicionais e faça seu pedido.</p>
+                <div class="cards" id="lista-produtos">
+                    <p class="aviso">Carregando cardápio...</p>
                 </div>
-            </div>
+            </section>
         </section>
 
-        <!-- CLIENTE À DIREITA -->
         <aside class="cliente">
-
-            <img src="/img/tun tun sahur.png" alt="Cliente provando o Sabor & Brasa">
-            <h2>
-                Experimente o Sabor & Brasa!
-            </h2>
-            <p>
-                Experimente em primeira mão o sabor que conquista desde a primeira mordida, Costela Supreme Single.
-            </p>
-            <button onclick="abrirCardapio()">
-                Fazer pedido
-            </button>
+            <img src="../img/tun tun sahur.png" alt="Cliente provando o Sabor &amp; Brasa">
+            <h2>Experimente o Sabor &amp; Brasa!</h2>
+            <p>Experimente o sabor que conquista desde a primeira mordida.</p>
+            <button type="button" onclick="abrirCardapio()">Fazer pedido</button>
         </aside>
     </main>
 
-    <!-- MODAL DO CARDÁPIO -->
-    <div class="modal-produto" id="modalProduto">
-
-        <div class="produto">
-
-            <!-- FECHAR -->
-            <button class="fechar" onclick="fecharProduto()">
-                ×
-            </button>
-
+    <div class="modal-produto" id="modalProduto" aria-hidden="true">
+        <div class="produto" role="dialog" aria-modal="true" aria-labelledby="nome-produto">
+            <button class="fechar" type="button" onclick="fecharProduto()" aria-label="Fechar">×</button>
             <div class="produto-imagem">
                 <img id="imagem-produto" src="" alt="">
             </div>
-
             <div class="produto-info">
                 <h2 id="nome-produto"></h2>
-
-                <p class="descricao">
-                    Single (160g). Prepare-se para a elite!
-                    Hambúrguer de costela (160g) na brasa,
-                    coberto por muito cheddar americano
-                    derretido e bacon crocante.
-                    O sabor explode com o exclusivo Ketchup Heinz,
-                    Cebola Caramelizada e Bacon.
-                </p>
-
+                <p class="descricao" id="descricao-produto"></p>
                 <p class="preco" id="preco-base"></p>
-
-                <!-- ACRÉSCIMOS -->
                 <div class="acrescimos">
                     <h3>Acréscimos</h3>
                     <p>Escolha os adicionais que quiser</p>
                 </div>
-
-                <!-- COSTELA -->
-                <div class="opcao">
-                    <div>
-                        <span>Coca-Cola 450ML</span>
-                        <small>+ R$ 9,50</small>
-                    </div>
-
-                    <div class="quantidade">
-                        <button onclick="alterarQuantidade('costela', -1)">−</button>
-
-                        <span id="qtd-costela">0</span>
-
-                        <button onclick="alterarQuantidade('costela', 1)">+</button>
-                    </div>
-                </div>
-
-
-                <!-- BOVINO -->
-                <div class="opcao">
-                    <div>
-                        <span>Coca-Cola 2L</span>
-                        <small>+ R$ 15,50</small>
-                    </div>
-
-                    <div class="quantidade">
-                        <button onclick="alterarQuantidade('bovino', -1)">−</button>
-
-                        <span id="qtd-bovino">0</span>
-
-                        <button onclick="alterarQuantidade('bovino', 1)">+</button>
-                    </div>
-                </div>
-
-
-                <!-- BACON -->
-                <div class="opcao">
-                    <div>
-                        <span>Bacon Extra</span>
-                        <small>+ R$ 5,00</small>
-                    </div>
-
-                    <div class="quantidade">
-                        <button onclick="alterarQuantidade('bacon', -1)">−</button>
-
-                        <span id="qtd-bacon">0</span>
-
-                        <button onclick="alterarQuantidade('bacon', 1)">+</button>
-                    </div>
-                </div>
-
-
-                <!-- QUEIJO -->
-                <div class="opcao">
-                    <div>
-                        <span>Queijo Extra</span>
-                        <small>+ R$ 4,00</small>
-                    </div>
-
-                    <div class="quantidade">
-                        <button onclick="alterarQuantidade('queijo', -1)">−</button>
-
-                        <span id="qtd-queijo">0</span>
-
-                        <button onclick="alterarQuantidade('queijo', 1)">+</button>
-                    </div>
-                </div>
+                <div id="lista-adicionais"></div>
                 <div class="produto-footer">
-
                     <div class="contador">
-
-                        <button onclick="alterarProduto(-1)">
-                            −
-                        </button>
-
-                        <span id="quantidade-produto">
-                            1
-                        </span>
-
-                        <button onclick="alterarProduto(1)">
-                            +
-                        </button>
-
+                        <button type="button" onclick="alterarProduto(-1)">−</button>
+                        <span id="quantidade-produto">1</span>
+                        <button type="button" onclick="alterarProduto(1)">+</button>
                     </div>
-
-                    <button class="adicionar" onclick="adicionarCarrinho()">
-
+                    <button class="adicionar" type="button" onclick="adicionarCarrinho()">
                         <span>Adicionar</span>
-
-                        <strong id="preco-total">
-                            R$ 37,00
-                        </strong>
-
+                        <strong id="preco-total">R$ 0,00</strong>
                     </button>
-
                 </div>
+            </div>
+        </div>
+    </div>
 
-                <!-- RODAPÉ -->
-                <footer>
-                    <h3>
-                        <a href="#">
-                            Siga o programador @Pirez_7
-                        </a>
-                    </h3>
-                    <p>
-                        Deus abençoe todos!
-                    </p>
-                </footer>
+    <footer>
+        <h3><a href="#">Siga o programador @Pirez_7</a></h3>
+        <p>Deus abençoe todos!</p>
+    </footer>
 
-
+    <script src="../js/script.js"></script>
 </body>
-<script src="/js/script.js"></script>
-
 </html>

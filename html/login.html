@@ -3,41 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Sabor & Brasa</title>
-    <link rel="stylesheet" href="/css/style.css">
+    <title>Entrar - Sabor &amp; Brasa</title>
+    <link rel="stylesheet" href="../css/login.css">
 </head>
-
 <body>
+    <main class="pagina-form">
+        <section class="painel-form">
+            <div class="marca">
+                <h1>SABOR <span>&amp;</span></h1>
+                <h2>BRASA</h2>
+            </div>
 
-    <div class="login">
+            <div class="chamada">
+                <h3>Bem-vindo de <span>volta.</span></h3>
+                <p>Entre na sua conta para acompanhar seus pedidos e aproveitar os sabores do Sabor &amp; Brasa.</p>
+            </div>
 
-        <div class="marca">
-            <h1>SABOR <span>&</span></h1>
-            <h2>BRASA</h2>
-            <p>HAMBÚRGUERES</p>
-        </div>
+            <form id="form-login">
+                <label for="email">E-mail</label>
+                <input id="email" name="email" type="email"
+                       placeholder="Digite seu e-mail" autocomplete="email" required>
 
-        <h3>Entrar</h3>
+                <label for="senha">Senha</label>
+                <input id="senha" name="senha" type="password"
+                       placeholder="Digite sua senha" autocomplete="current-password"
+                       minlength="6" required>
 
-        <form>
-            <input type="email" placeholder="E-mail">
+                <button type="submit">ENTRAR</button>
+            </form>
 
-            <input type="password" placeholder="Senha">
+            <p class="aviso" id="mensagem" aria-live="polite"></p>
+            <p>Ainda não tem uma conta? <a href="cadastro.html">Criar conta</a></p>
+            <p><a href="index.html">← Voltar ao site</a></p>
 
-            <button onclick="entrarPagina()" type="submit">ENTRAR</button>
-        </form>
+            <div class="rodape-form">SABOR &amp; BRASA · Feito para matar sua fome.</div>
+        </section>
 
-        <a href="#" class="esqueci">Esqueci minha senha</a>
+        <section class="visual-login" aria-label="Apresentação Sabor e Brasa">
+            <div class="visual-texto">
+                <strong>Mais que um hambúrguer</strong>
+                <h2>Seu momento merece um sabor especial.</h2>
+                <p>Ingredientes selecionados, preparo caprichado e aquele sabor que dá vontade de voltar.</p>
+            </div>
+        </section>
+    </main>
 
-        <p class="cadastro">
-            Ainda não tem uma conta?
-            <a href="#">Criar conta</a>
-        </p>
-
-        <a href="index.html" class="voltar">← Voltar ao site</a>
-
-    </div>
-
+    <script src="../js/auth.js"></script>
 </body>
-<script src="/js/script.js"></script>
 </html>

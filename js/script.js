@@ -1,225 +1,304 @@
+const API = '../api';
 
-const produtos = {
-    
-    basico: {
-        nome: "X-Básico",
-        preco: 20.00,
-        imagem: "/img/792cf5dc0120821dbac92de5b5cb2afb.jpg"
-    },
-
-    amazonia: {
-        nome: "X-Amazonia",
-        preco: 28.00,
-        imagem: "/img/b50d22aed638664f17fe53e43680d7c8.jpg"
-    },
-
-    frango: {
-        nome: "X-Frango do Sabor",
-        preco: 33.00,
-        imagem: "/img/aab97026788432316d3a26d6057de02e.jpg"
-    },
-
-    egg: {
-        nome: "X-EGG-MAX-PRO-ULTIMATE",
-        preco: 52.00,
-        imagem: "/img/e263e50bc39528becbd777a271e297af.jpg"
-    },
-
-    costela: {
-        nome: "Costela Supreme Single",
-        preco: 87.00,
-        imagem: "../img/costela.jpg"
-    }
-
-};
-
-
-// PRODUTO ATUAL
-let produtoAtual = produtos.costela;
-
-
-// QUANTIDADE DO HAMBÚRGUER
+let produtos = [];
+let adicionais = [];
+let produtoAtual = null;
 let quantidadeProduto = 1;
+let quantidadesAdicionais = {};
 
+const moeda = v => Number(v).toLocaleString('pt-BR', {
+    style: 'currency',
+    currency: 'BRL'
+});
 
-// ADICIONAIS
-const adicionais = {
+function escapeHtml(v) {
+    return String(v ?? '').replace(/[&<>"']/g, c => ({
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+    }[c]));
+}
 
-    costela: {
-        preco: 9.50,
-        quantidade: 0
-    },
+async function carregarCardapio() {
+    const lista = document.getElementById('lista-produtos');
+    if (!lista) return;
 
-    bovino: {
-        preco: 15.50,
-        quantidade: 0
-    },
+    try {
+        const [rp, ra] = await Promise.all([
+            fetch(`${API}/produtos.php`),
+            fetch(`${API}/adicionais.php`)
+        ]);
 
-    bacon: {
-        preco: 5.00,
-        quantidade: 0
-    },
+        const dp = await rp.json();
+        const da = await ra.json();
 
-    queijo: {
-        preco: 4.00,
-        quantidade: 0
+        if (!rp.ok || !dp.sucesso) {
+            throw new Error(dp.mensagem || 'Não foi possível carregar os produtos.');
+        }
+
+        produtos = dp.produtos || [];
+        adicionais = da.adicionais || [];
+
+        lista.innerHTML = '';
+
+        const hamburgueres = produtos.filter(p => (p.categoria || 'hamburguer') === 'hamburguer');
+        const acompanhamentos = produtos.filter(p => p.categoria === 'acompanhamento');
+
+        renderizarGrupo(lista, 'Hambúrgueres', hamburgueres, '🍔');
+        renderizarGrupo(lista, 'Bebidas e sobremesas', acompanhamentos, '🥤');
+
+        atualizarContadorCarrinho();
+    } catch (e) {
+        lista.innerHTML = `<p class="aviso">${escapeHtml(e.message)} Confira se o WAMP e o banco de dados estão ligados.</p>`;
     }
+}
 
-};
+function renderizarGrupo(container, titulo, itens, icone) {
+    if (!itens.length) return;
 
+    const secao = document.createElement('section');
+    secao.className = 'grupo-cardapio';
 
-// ABRIR PRODUTO
-function abrirProduto(tipo) {
+    const heading = document.createElement('h3');
+    heading.className = 'titulo-grupo-cardapio';
+    heading.textContent = `${icone} ${titulo}`;
+    secao.appendChild(heading);
 
-    produtoAtual = produtos[tipo];
+    const grade = document.createElement('div');
+    grade.className = 'cards';
+
+    itens.forEach(p => {
+        const card = document.createElement('article');
+        card.className = 'card';
+        card.tabIndex = 0;
+
+        const imagem = p.imagem
+            ? `<img src="../${escapeHtml(p.imagem)}" alt="${escapeHtml(p.nome)}">`
+            : `<div class="card-sem-imagem" aria-hidden="true">${p.categoria === 'acompanhamento' ? '🥤' : '🍔'}</div>`;
+
+        card.innerHTML = `
+            ${imagem}
+            <div>
+                <h3>${escapeHtml(p.nome)}</h3>
+                <p>${escapeHtml(p.descricao || 'Preparado especialmente para você.')}</p>
+                <p class="preco-card">${moeda(p.preco)}</p>
+                <span class="texto-escolher">Clique para escolher</span>
+            </div>`;
+
+        card.addEventListener('click', () => abrirProduto(p.id));
+        card.addEventListener('keydown', e => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                abrirProduto(p.id);
+            }
+        });
+
+        grade.appendChild(card);
+    });
+
+    secao.appendChild(grade);
+    container.appendChild(secao);
+}
+
+function abrirMenu() {
+    document.getElementById('menu')?.classList.toggle('ativo');
+}
+
+function abrirCardapio() {
+    document.getElementById('menu')?.classList.remove('ativo');
+    document.getElementById('cardapio')?.scrollIntoView({ behavior: 'smooth' });
+}
+
+function abrirProdutoPorSlug(slug) {
+    const p = produtos.find(x => String(x.slug || '').toLowerCase() === slug)
+        || produtos.find(x => x.nome.toLowerCase().includes('costela'));
+
+    if (p) abrirProduto(p.id);
+    else abrirCardapio();
+}
+
+function abrirProduto(id) {
+    produtoAtual = produtos.find(p => Number(p.id) === Number(id));
+    if (!produtoAtual) return;
 
     quantidadeProduto = 1;
+    quantidadesAdicionais = {};
 
-    // Zera os adicionais
-    for (const produto in adicionais) {
-        adicionais[produto].quantidade = 0;
-        document.getElementById("qtd-" + produto).textContent = "0";
+    document.getElementById('nome-produto').textContent = produtoAtual.nome;
+    document.getElementById('descricao-produto').textContent =
+        produtoAtual.descricao || 'Preparado com ingredientes selecionados.';
+
+    const imagemProduto = document.getElementById('imagem-produto');
+    if (produtoAtual.imagem) {
+        imagemProduto.src = '../' + produtoAtual.imagem;
+        imagemProduto.style.display = '';
+    } else {
+        imagemProduto.removeAttribute('src');
+        imagemProduto.style.display = 'none';
+    }
+    imagemProduto.alt = produtoAtual.nome;
+
+    document.getElementById('preco-base').textContent = moeda(produtoAtual.preco);
+    document.getElementById('quantidade-produto').textContent = '1';
+
+    const box = document.getElementById('lista-adicionais');
+    const tituloAdicionais = document.querySelector('.acrescimos');
+
+    box.innerHTML = '';
+
+    // Bebidas e sobremesas são produtos individuais; adicionais só aparecem nos hambúrgueres.
+    const permiteAdicionais = (produtoAtual.categoria || 'hamburguer') === 'hamburguer';
+    if (tituloAdicionais) tituloAdicionais.style.display = permiteAdicionais ? '' : 'none';
+    box.style.display = permiteAdicionais ? '' : 'none';
+
+    if (permiteAdicionais) {
+        adicionais.forEach(a => {
+            quantidadesAdicionais[a.id] = 0;
+
+            const el = document.createElement('div');
+            el.className = 'opcao';
+            el.innerHTML = `
+                <div>
+                    <span>${escapeHtml(a.nome)}</span>
+                    <small>+ ${moeda(a.preco)}</small>
+                </div>
+                <div class="quantidade">
+                    <button type="button" aria-label="Diminuir">−</button>
+                    <span>0</span>
+                    <button type="button" aria-label="Aumentar">+</button>
+                </div>`;
+
+            const buttons = el.querySelectorAll('button');
+            const span = el.querySelector('.quantidade span');
+
+            buttons[0].onclick = () => mudarAdicional(a.id, -1, span);
+            buttons[1].onclick = () => mudarAdicional(a.id, 1, span);
+
+            box.appendChild(el);
+        });
     }
 
-    // Nome
-    document.getElementById("nome-produto").textContent =
-        produtoAtual.nome;
-    // Imagem
-    document.getElementById("imagem-produto").src =
-        produtoAtual.imagem;
-    document.getElementById("imagem-produto").alt =
-        produtoAtual.nome;
-    // Preço base
-    document.getElementById("preco-base").textContent =
-        "R$ " + produtoAtual.preco.toFixed(2).replace(".", ",");
-    // Quantidade
-    document.getElementById("quantidade-produto").textContent =
-        quantidadeProduto;
-    atualizarPreco();
-    // Fecha menu
-    document.getElementById("menu").classList.remove("ativo");
-    // Abre modal
-    document.getElementById("modalProduto").classList.add("ativo");
-}
-
-
-// ALTERAR QUANTIDADE DO HAMBÚRGUER
-function alterarProduto(valor) {
-
-    quantidadeProduto += valor;
-
-    if (quantidadeProduto < 1) {
-        quantidadeProduto = 1;
-    }
-    document.getElementById("quantidade-produto").textContent =
-        quantidadeProduto;
-
+    document.getElementById('menu')?.classList.remove('ativo');
+    document.getElementById('modalProduto').classList.add('ativo');
+    document.getElementById('modalProduto').setAttribute('aria-hidden', 'false');
     atualizarPreco();
 }
 
-
-// ALTERAR QUANTIDADE DOS ADICIONAIS
-function alterarQuantidade(produto, valor) {
-
-    const item = adicionais[produto];
-
-    item.quantidade += valor;
-
-    if (item.quantidade < 0) {
-        item.quantidade = 0;
-    }
-
-    document.getElementById("qtd-" + produto).textContent =
-        item.quantidade;
-
+function mudarAdicional(id, delta, span) {
+    quantidadesAdicionais[id] = Math.max(0, (quantidadesAdicionais[id] || 0) + delta);
+    span.textContent = quantidadesAdicionais[id];
     atualizarPreco();
 }
 
+function alterarProduto(delta) {
+    quantidadeProduto = Math.max(1, quantidadeProduto + delta);
+    document.getElementById('quantidade-produto').textContent = quantidadeProduto;
+    atualizarPreco();
+}
 
-// CALCULAR PREÇO
 function atualizarPreco() {
+    if (!produtoAtual) return;
 
-    let precoAdicionais = 0;
-
-    for (const produto in adicionais) {
-
-        const item = adicionais[produto];
-        precoAdicionais +=
-
-            item.preco * item.quantidade;
+    let unit = Number(produtoAtual.preco);
+    if ((produtoAtual.categoria || 'hamburguer') === 'hamburguer') {
+        adicionais.forEach(a => {
+            unit += Number(a.preco) * (quantidadesAdicionais[a.id] || 0);
+        });
     }
 
-    // Preço do hambúrguer + adicionais
-    const precoUnitario =
-        produtoAtual.preco + precoAdicionais;
-
-    // Multiplica pela quantidade
-    const total =
-        precoUnitario * quantidadeProduto;
-
-    document.getElementById("preco-total").textContent =
-        "R$ " + total.toFixed(2).replace(".", ",");
+    document.getElementById('preco-total').textContent = moeda(unit * quantidadeProduto);
 }
 
-
-// ABRIR MENU
-function abrirMenu() {
-
-    const menu = document.getElementById("menu");
-
-    menu.classList.toggle("ativo");
-}
-
-
-// ABRIR CARDÁPIO PELO MENU
-function abrirCardapio() {
-
-    document.getElementById("menu").classList.remove("ativo");
-
-    abrirProduto("costela");
-}
-
-
-// FECHAR PRODUTO
 function fecharProduto() {
-
-    document
-        .getElementById("modalProduto")
-        .classList.remove("ativo");
+    document.getElementById('modalProduto').classList.remove('ativo');
+    document.getElementById('modalProduto').setAttribute('aria-hidden', 'true');
 }
 
-
-// ADICIONAR AO CARRINHO
 function adicionarCarrinho() {
+    if (!produtoAtual) return;
 
-    const total =
-        document.getElementById("preco-total").textContent;
+    const cart = JSON.parse(localStorage.getItem('sb_carrinho') || '[]');
+    const escolhidos = (produtoAtual.categoria || 'hamburguer') === 'hamburguer'
+        ? adicionais
+            .filter(a => quantidadesAdicionais[a.id] > 0)
+            .map(a => ({
+                id: Number(a.id),
+                nome: a.nome,
+                preco: Number(a.preco),
+                quantidade: quantidadesAdicionais[a.id]
+            }))
+        : [];
 
-    alert(
-        "Pedido adicionado ao carrinho!\n\n" +
+    cart.push({
+        produto_id: Number(produtoAtual.id),
+        nome: produtoAtual.nome,
+        preco: Number(produtoAtual.preco),
+        imagem: produtoAtual.imagem,
+        quantidade: quantidadeProduto,
+        adicionais: escolhidos
+    });
 
-        produtoAtual.nome +
-
-        "\nQuantidade: " +
-        quantidadeProduto +
-
-        "\nTotal: " +
-        total
-    );
+    localStorage.setItem('sb_carrinho', JSON.stringify(cart));
+    atualizarContadorCarrinho();
+    fecharProduto();
+    alert('Produto adicionado ao carrinho!');
 }
-//LOGIN
-function entrarPagina(){
 
-    var Senha_Usuário;
+function atualizarContadorCarrinho() {
+    const c = JSON.parse(localStorage.getItem('sb_carrinho') || '[]')
+        .reduce((s, i) => s + Number(i.quantidade || 0), 0);
 
-   
-    Senha_Usuário = document.getElementById('inpSenha').value;
-
-    if ( Senha_Usuário === "123"){
-        alert("login realizado com sucesso!.");
-        window.location.href = "/html/index.html";
-    }
-    else {
-        alert("Senha e/ou Usuário incorretos. Tente Novamente")
-    }
+    const el = document.getElementById('contador-carrinho');
+    if (el) el.textContent = c;
 }
+
+// Carrossel: só inicia se os elementos existirem nesta página.
+function iniciarCarrossel() {
+    const listaImagens = document.querySelector('.lista-imagens');
+    const imagens = document.querySelectorAll('.imagem');
+    const botaoAnterior = document.querySelector('.botao-anterior');
+    const botaoProximo = document.querySelector('.botao-proximo');
+    const areaIndicadores = document.querySelector('.indicadores');
+
+    if (!listaImagens || !imagens.length || !botaoAnterior || !botaoProximo || !areaIndicadores) return;
+
+    let imagemAtual = 0;
+    areaIndicadores.innerHTML = '';
+
+    imagens.forEach((imagem, indice) => {
+        const indicador = document.createElement('button');
+        indicador.classList.add('indicador');
+        indicador.setAttribute('aria-label', `Ir para a imagem ${indice + 1}`);
+        indicador.addEventListener('click', () => {
+            imagemAtual = indice;
+            atualizarCarrossel();
+        });
+        areaIndicadores.appendChild(indicador);
+    });
+
+    function atualizarCarrossel() {
+        listaImagens.style.transform = `translateX(-${imagemAtual * 100}%)`;
+        areaIndicadores.querySelectorAll('.indicador').forEach((indicador, indice) => {
+            indicador.classList.toggle('ativo', indice === imagemAtual);
+        });
+    }
+
+    botaoProximo.addEventListener('click', () => {
+        imagemAtual = (imagemAtual + 1) % imagens.length;
+        atualizarCarrossel();
+    });
+
+    botaoAnterior.addEventListener('click', () => {
+        imagemAtual = (imagemAtual - 1 + imagens.length) % imagens.length;
+        atualizarCarrossel();
+    });
+
+    atualizarCarrossel();
+}
+
+document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') fecharProduto();
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    carregarCardapio();
+    iniciarCarrossel();
+});
